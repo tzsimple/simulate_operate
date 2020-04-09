@@ -1,5 +1,4 @@
-# 学习强国
-# 手动登录获取cookies，把cookies信息保存到cookie.txt
+# 学习强国,#手动登录获取cookies，把cookies信息保存到cookie.txt
 # coding:utf-8
 from selenium import webdriver
 import time
