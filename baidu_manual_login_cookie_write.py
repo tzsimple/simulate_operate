@@ -1,9 +1,7 @@
 #手动登录获取cookies，把cookies信息保存到cookie.txt
 # coding:utf-8
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
 import time
-import requests
 
 def login():
     # 手动登录获取cookies
@@ -15,6 +13,7 @@ def login():
     cookie = driver.get_cookies()  # 获取cookie,列表形式
     f = open("cookie.txt", "w")
     f.write(str(cookie))  # 转换为字符串
+    f.close()
     print(cookie)
     print(driver.title)
 

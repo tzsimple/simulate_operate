@@ -12,4 +12,4 @@ for cookie in dict:  #遍历添加cookie
 
 time.sleep(5)
 driver.get("https://pan.baidu.com/")
-time.sleep(5)
+
