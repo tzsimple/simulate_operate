@@ -14,7 +14,6 @@ def login():
     f.write(str(cookie))  # 转换为字符串
     f.close()
     print(cookie)
-    print(driver.title)
 
 if __name__ == "__main__":
     login()
