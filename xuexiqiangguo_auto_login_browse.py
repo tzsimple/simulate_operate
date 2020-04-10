@@ -45,12 +45,12 @@ def browsenews():
         time.sleep(1)
         driver.switch_to.window(driver.window_handles[1])#跳转到新页面
         time.sleep(2)
-        for i in range(15):  #向下滚动
+        for i in range(20):  #向下滚动
             driver.execute_script("window.scrollBy(0, 200)")
             time.sleep(5)
         for i in range(10):  #向上滚动
             driver.execute_script("window.scrollBy(0, -400)")
-            time.sleep(2)
+            time.sleep(2.5)
         driver.close()  #关闭当前窗口
         driver.switch_to.window(driver.window_handles[0])#回到第一个页面
     driver.quit()  # 退出相关驱动程序,并关闭所有窗口
@@ -92,7 +92,7 @@ def PerformBrowse():
     browsenews()
     browseCCTVNews()
     delay = 24*60*60 #间隔时间24小时。
-    t = Timer(delay, printHello)
+    t = Timer(delay, PerformBrowse)
     t.start()
 
 if __name__ == "__main__":
