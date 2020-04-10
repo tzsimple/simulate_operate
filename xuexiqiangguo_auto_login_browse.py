@@ -33,6 +33,8 @@ def browsenews():
     r = fp.read()
     dict = eval(r)       #转换为字典形式
     for cookie in dict:  #遍历添加cookie
+        if 'expiry' in cookie:
+            del cookie['expiry']
         driver.add_cookie(cookie)
     time.sleep(5)
     driver.get(url)  # 进入重要新闻页面
@@ -66,6 +68,8 @@ def browseCCTVNews():
     r = fp.read()
     dict = eval(r)  # 转换为字典形式
     for cookie in dict:  # 遍历添加cookie
+        if 'expiry' in cookie:
+            del cookie['expiry']
         driver.add_cookie(cookie)
     time.sleep(5)
     # 学习电视台,第一频道,新闻联播
