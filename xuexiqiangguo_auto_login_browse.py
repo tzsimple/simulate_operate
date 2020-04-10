@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 import datetime
+from threading import Timer
 
 """
 # 自动浏览学习强国，#读取cookie.txt信息到cookies文件，实现自动登入
@@ -33,12 +34,12 @@ def browsenews():
     dict = eval(r)       #转换为字典形式
     for cookie in dict:  #遍历添加cookie
         driver.add_cookie(cookie)
-
+    time.sleep(5)
     driver.get(url)  # 进入重要新闻页面
     # 10秒钟内只要找到了元素就开始执行，10秒钟后未找到，就超时； 如果不等待，下面的语句会出现找不到元素的错误
     driver.implicitly_wait(10)
     ele_news=driver.find_elements_by_class_name("text-wrap") #查找元素
-    for i in range(1):
+    for i in range(8):
         selnews = ele_news[i]
         selnews.click()
         time.sleep(1)
@@ -66,6 +67,7 @@ def browseCCTVNews():
     dict = eval(r)  # 转换为字典形式
     for cookie in dict:  # 遍历添加cookie
         driver.add_cookie(cookie)
+    time.sleep(5)
     # 学习电视台,第一频道,新闻联播
     url = 'https://www.xuexi.cn/8e35a343fca20ee32c79d67e35dfca90/7f9f27c65e84e71e1b7189b7132b4710.html?p1='
     today = datetime.date.today()
@@ -80,6 +82,21 @@ def browseCCTVNews():
         time.sleep(200)
 
     driver.quit()  # 退出相关驱动程序,并关闭所有窗口
-if __name__ == "__main__":
-    # browsenews()
+
+def PerformBrowse():
+    """
+    # 每隔24小时执行一次任务
+    :return:
+    """
+    print('TimeNow:%s' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+    browsenews()
     browseCCTVNews()
+    delay = 24*60*60 #间隔时间24小时。
+    t = Timer(delay, printHello)
+    t.start()
+
+if __name__ == "__main__":
+    PerformBrowse()
+
+
+
