@@ -87,16 +87,52 @@ def browseCCTVNews():
 
     driver.quit()  # 退出相关驱动程序,并关闭所有窗口
 
+def updateCookie():
+    """
+    # 更新cookie，每隔1小时执行一次任务
+    :return:
+    """
+    print('执行时间:%s' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+    print('old cookie:')
+    driver = webdriver.Chrome()
+    driver.get("https://www.xuexi.cn/")
+    time.sleep(5)
+    fp = open("cookie_xuexi.txt", "r+", encoding='utf-8')
+    r = fp.read()
+    dict = eval(r)  # 转换为字典形式
+    print(dict)
+    for cookie in dict:  # 遍历添加cookie
+        if 'expiry' in cookie:
+            del cookie['expiry']
+        driver.add_cookie(cookie)
+    driver.get("https://www.xuexi.cn/")
+    time.sleep(5)
+    loginele = driver.find_elements_by_class_name("logged-link")
+    if len(loginele) == 0:
+        print("未登录")
+    else:
+        print("已经登录")
+    print('new cookie:')
+    cookie = driver.get_cookies()  # 获取cookie,列表形式
+    f = open("cookie_xuexi.txt", "w")
+    f.write(str(cookie))  # 转换为字符串
+    f.close()
+    print(cookie)
+    driver.quit()  # 退出相关驱动程序,并关闭所有窗口
+
 def PerformBrowse():
     """
     # 每隔24小时执行一次任务
     :return:
     """
-    print('TimeNow:%s' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+    for i in range(23):
+        updateCookie()
+        delay = 1 * 60 * 60  # 间隔时间1小时。
+        time.sleep(delay)
+    print('开始浏览:%s......' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
     browsenews()
     browseCCTVNews()
-    delay = 24*60*60 #间隔时间24小时。
-    t = Timer(delay, PerformBrowse)
+    t = Timer(1, PerformBrowse)
     t.start()
 
 if __name__ == "__main__":
