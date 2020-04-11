@@ -20,6 +20,7 @@ def beforeday(today):
     oneday=datetime.timedelta(days=1)
     yesterday=today-oneday
     return yesterday
+
 def browsenews():
     """
     浏览重要新闻
@@ -56,6 +57,7 @@ def browsenews():
         driver.close()  #关闭当前窗口
         driver.switch_to.window(driver.window_handles[0])#回到第一个页面
     driver.quit()  # 退出相关驱动程序,并关闭所有窗口
+
 def browseCCTVNews():
     """
     浏览新闻联播
