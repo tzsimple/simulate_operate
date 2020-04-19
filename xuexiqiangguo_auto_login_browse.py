@@ -92,18 +92,18 @@ def browseCCTVNews():
 
 def updateCookie():
     """
-    # 更新cookie，每隔1小时执行一次任务
+    # 更新cookie
     :return:
     """
     print('执行时间:%s' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-    print('old cookie:')
+    # print('old cookie:')
     driver = webdriver.Chrome()
     driver.get("https://www.xuexi.cn/")
     time.sleep(5)
     fp = open("cookie_xuexi.txt", "r+", encoding='utf-8')
     r = fp.read()
     dict = eval(r)  # 转换为字典形式
-    print(dict)
+    # print(dict)
     for cookie in dict:  # 遍历添加cookie
         if 'expiry' in cookie:
             del cookie['expiry']
@@ -115,12 +115,12 @@ def updateCookie():
         print("未登录")
     else:
         print("已经登录")
-    print('new cookie:')
+    # print('new cookie:')
     cookie = driver.get_cookies()  # 获取cookie,列表形式
     f = open("cookie_xuexi.txt", "w")
     f.write(str(cookie))  # 转换为字符串
     f.close()
-    print(cookie)
+    # print(cookie)
     driver.quit()  # 退出相关驱动程序,并关闭所有窗口
 
 def PerformBrowse():
@@ -136,7 +136,7 @@ def PerformBrowse():
             browsenews()
             browseCCTVNews()
         elif(i.hour>=23) or (i.hour>=7 and i.hour<=8):
-            updateCookie()
+            updateCookie()  # 更新cookie
         time.sleep(delay)
 
 if __name__ == "__main__":
