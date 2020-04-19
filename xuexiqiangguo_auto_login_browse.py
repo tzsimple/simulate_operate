@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 import datetime
-from threading import Timer
+import random
 
 """
 # 自动浏览学习强国，#读取cookie.txt信息到cookies文件，实现自动登入
@@ -138,6 +138,7 @@ def PerformBrowse():
         elif(i.hour>=23) or (i.hour>=7 and i.hour<=8):
             updateCookie()  # 更新cookie
         time.sleep(delay)
+
 
 if __name__ == "__main__":
     PerformBrowse()
