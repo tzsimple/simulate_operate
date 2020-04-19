@@ -42,7 +42,7 @@ def browsenews():
     # 10秒钟内只要找到了元素就开始执行，10秒钟后未找到，就超时； 如果不等待，下面的语句会出现找不到元素的错误
     driver.implicitly_wait(10)
     ele_news=driver.find_elements_by_class_name("text-wrap") #查找元素
-    for i in range(8):
+    for i in range(6):
         selnews = ele_news[i]
         selnews.click()
         time.sleep(1)
@@ -50,7 +50,8 @@ def browsenews():
         time.sleep(2)
         for i in range(20):  #向下滚动
             driver.execute_script("window.scrollBy(0, 200)")
-            time.sleep(5)
+            delaysecond = random.randint(5, 10)
+            time.sleep(delaysecond)
         for i in range(10):  #向上滚动
             driver.execute_script("window.scrollBy(0, -400)")
             time.sleep(2.5)
@@ -91,18 +92,18 @@ def browseCCTVNews():
 
 def updateCookie():
     """
-    # 更新cookie，每隔1小时执行一次任务
+    # 更新cookie
     :return:
     """
     print('执行时间:%s' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-    print('old cookie:')
+    # print('old cookie:')
     driver = webdriver.Chrome()
     driver.get("https://www.xuexi.cn/")
     time.sleep(5)
     fp = open("cookie_xuexi.txt", "r+", encoding='utf-8')
     r = fp.read()
     dict = eval(r)  # 转换为字典形式
-    print(dict)
+    # print(dict)
     for cookie in dict:  # 遍历添加cookie
         if 'expiry' in cookie:
             del cookie['expiry']
@@ -114,28 +115,29 @@ def updateCookie():
         print("未登录")
     else:
         print("已经登录")
-    print('new cookie:')
+    # print('new cookie:')
     cookie = driver.get_cookies()  # 获取cookie,列表形式
     f = open("cookie_xuexi.txt", "w")
     f.write(str(cookie))  # 转换为字符串
     f.close()
-    print(cookie)
+    # print(cookie)
     driver.quit()  # 退出相关驱动程序,并关闭所有窗口
 
 def PerformBrowse():
     """
-    # 每隔24小时执行一次任务
+    # 每天15时执行一次任务
     :return:
     """
-    for i in range(23):
-        updateCookie()
-        delay = 1 * 60 * 60  # 间隔时间1小时。
+    delay = 1 * 60 * 60  # 间隔时间1小时。
+    while True:
+        i = datetime.datetime.now()
+        if (i.hour >= 15 and i.hour <= 16):
+            print('开始浏览:%s......' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+            browsenews()
+            browseCCTVNews()
+        elif(i.hour>=23) or (i.hour>=7 and i.hour<=8):
+            updateCookie()  # 更新cookie
         time.sleep(delay)
-    print('开始浏览:%s......' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-    browsenews()
-    browseCCTVNews()
-    t = Timer(1, PerformBrowse)
-    t.start()
 
 if __name__ == "__main__":
     PerformBrowse()
