@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 import datetime
-from threading import Timer
+import random
 
 """
 # 自动浏览学习强国，#读取cookie.txt信息到cookies文件，实现自动登入
