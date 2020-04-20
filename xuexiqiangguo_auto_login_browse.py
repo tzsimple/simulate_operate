@@ -30,6 +30,7 @@ def browsenews():
     driver= webdriver.Chrome()
     driver.get("https://www.xuexi.cn/")
     time.sleep(5)
+    # 读取 cookie文件
     fp = open("cookie_xuexi.txt", "r+", encoding='utf-8')
     r = fp.read()
     dict = eval(r)       #转换为字典形式
@@ -67,6 +68,7 @@ def browseCCTVNews():
     driver = webdriver.Chrome()
     driver.get("https://www.xuexi.cn/")
     time.sleep(5)
+    # 读取 cookie文件
     fp = open("cookie_xuexi.txt", "r+", encoding='utf-8')
     r = fp.read()
     dict = eval(r)  # 转换为字典形式
@@ -87,7 +89,6 @@ def browseCCTVNews():
         ele_news = driver.find_element_by_class_name("outter")  # 查找 播放按钮 素
         ele_news.click()
         time.sleep(200)
-
     driver.quit()  # 退出相关驱动程序,并关闭所有窗口
 
 def updateCookie():
@@ -96,14 +97,13 @@ def updateCookie():
     :return:
     """
     print('执行时间:%s' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-    # print('old cookie:')
     driver = webdriver.Chrome()
     driver.get("https://www.xuexi.cn/")
     time.sleep(5)
+    # 读取 cookie文件
     fp = open("cookie_xuexi.txt", "r+", encoding='utf-8')
     r = fp.read()
     dict = eval(r)  # 转换为字典形式
-    # print(dict)
     for cookie in dict:  # 遍历添加cookie
         if 'expiry' in cookie:
             del cookie['expiry']
@@ -115,12 +115,11 @@ def updateCookie():
         print("未登录")
     else:
         print("已经登录")
-    # print('new cookie:')
+    # 更新 cookie
     cookie = driver.get_cookies()  # 获取cookie,列表形式
     f = open("cookie_xuexi.txt", "w")
     f.write(str(cookie))  # 转换为字符串
     f.close()
-    # print(cookie)
     driver.quit()  # 退出相关驱动程序,并关闭所有窗口
 
 def PerformBrowse():
@@ -131,11 +130,11 @@ def PerformBrowse():
     delay = 1 * 60 * 60  # 间隔时间1小时。
     while True:
         i = datetime.datetime.now()
-        if (i.hour >= 15 and i.hour < 16):
+        if (i.hour >= 17 and i.hour < 18):
             print('开始浏览:%s......' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
             browsenews()
             browseCCTVNews()
-        elif(i.hour>=23) or (i.hour>=7 and i.hour<8):
+        elif(i.hour>=23) or (i.hour>=5 and i.hour<6)or (i.hour>=11 and i.hour<12):
             updateCookie()  # 更新cookie
         time.sleep(delay)
 
