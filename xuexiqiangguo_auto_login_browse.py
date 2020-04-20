@@ -89,7 +89,6 @@ def browseCCTVNews():
         ele_news = driver.find_element_by_class_name("outter")  # 查找 播放按钮 素
         ele_news.click()
         time.sleep(200)
-
     driver.quit()  # 退出相关驱动程序,并关闭所有窗口
 
 def updateCookie():
