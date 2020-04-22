@@ -96,7 +96,7 @@ def updateCookie():
     # 更新cookie
     :return:
     """
-    print('执行时间:%s' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+    print('更新cookie时间:%s' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
     driver = webdriver.Chrome()
     driver.get("https://www.xuexi.cn/")
     time.sleep(5)
@@ -130,13 +130,14 @@ def PerformBrowse():
     delay = 1 * 60 * 60  # 间隔时间1小时。
     while True:
         i = datetime.datetime.now()
-        if (i.hour >= 17 and i.hour < 18):
+        if (i.hour >= 15 and i.hour < 16):
             print('开始浏览:%s......' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
             browsenews()
             browseCCTVNews()
-        elif(i.hour>=21 and i.hour<22) or (i.hour>=5 and i.hour<6)or (i.hour>=13 and i.hour<14):
+        elif(i.hour>=23) or (i.hour>=7 and i.hour<8)or (i.hour>=15 and i.hour<16):
             updateCookie()  # 更新cookie
         time.sleep(delay)
+
 
 if __name__ == "__main__":
     PerformBrowse()
