@@ -134,7 +134,7 @@ def PerformBrowse():
             print('开始浏览:%s......' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
             browsenews()
             browseCCTVNews()
-        elif(i.hour>=21 and i.hour>22) or (i.hour>=5 and i.hour<6)or (i.hour>=13 and i.hour<14):
+        elif(i.hour>=21 and i.hour<22) or (i.hour>=5 and i.hour<6)or (i.hour>=13 and i.hour<14):
             updateCookie()  # 更新cookie
         time.sleep(delay)
 
