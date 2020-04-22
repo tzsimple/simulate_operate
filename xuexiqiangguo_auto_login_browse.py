@@ -130,7 +130,7 @@ def PerformBrowse():
     delay = 1 * 60 * 60  # 间隔时间1小时。
     while True:
         i = datetime.datetime.now()
-        if (i.hour >= 17 and i.hour < 18):
+        if (i.hour >= 15 and i.hour < 16):
             print('开始浏览:%s......' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
             browsenews()
             browseCCTVNews()
