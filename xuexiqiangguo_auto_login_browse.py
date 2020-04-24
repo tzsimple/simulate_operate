@@ -119,6 +119,7 @@ def updateCookie():
     cookie = driver.get_cookies()  # 获取cookie,列表形式
     f = open("cookie_xuexi.txt", "w")
     f.write(str(cookie))  # 转换为字符串
+    time.sleep(10)
     f.close()
     driver.quit()  # 退出相关驱动程序,并关闭所有窗口
 
@@ -134,7 +135,7 @@ def PerformBrowse():
             print('开始浏览:%s......' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
             browsenews()
             browseCCTVNews()
-        elif(i.hour>=23) or (i.hour>=7 and i.hour<8)or (i.hour>=15 and i.hour<16):
+        elif(i.hour>=23) or (i.hour>=7 and i.hour<8)or (i.hour>=15 and i.hour<16) or (i.hour>=0 and i.hour<1):
             updateCookie()  # 更新cookie
         time.sleep(delay)
 
