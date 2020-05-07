@@ -140,6 +140,7 @@ def updateCookie():
     loginele = driver.find_elements_by_class_name("logged-link")
     if len(loginele) == 0:
         print("cookie已经过期")
+        Flag = False
     else:
         print("使用cookie成功登录")
         # 更新 cookie文件
@@ -149,8 +150,10 @@ def updateCookie():
         time.sleep(10)
         f.close()
         print("cookie文件已经更新")
+        Flag = True
     print("-----------------------")
     driver.quit()  # 退出相关驱动程序,并关闭所有窗口
+    return Flag
 
 def PerformBrowse():
     """
@@ -160,12 +163,15 @@ def PerformBrowse():
     delay = 1 * 60 * 60  # 间隔时间1小时。
     while True:
         i = datetime.datetime.now()
-        if (i.hour >= 15 and i.hour < 16):
+        if (i.hour >= 6 and i.hour < 7):
+            Flag = updateCookie()  # 更新cookie
+            if flag == False:
+                break
             print('开始浏览:%s......' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
             browsenews()
             browseCCTVNews()
-        elif (i.hour >= 7 and i.hour < 8) or  (i.hour >= 15 and i.hour < 16) \
-                or (i.hour >= 23) or (i.hour>=0 and i.hour<1):
+        elif (i.hour >= 2 and i.hour < 3)  or  (i.hour >= 13 and i.hour < 14) \
+                or (i.hour >= 20 and i.hour < 21) or (i.hour>=0 and i.hour<1):
             updateCookie()  # 更新cookie
         time.sleep(delay)
 
