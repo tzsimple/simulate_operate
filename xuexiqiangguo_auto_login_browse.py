@@ -53,7 +53,7 @@ def browsenews():
     driver.implicitly_wait(10)
     ele_news=driver.find_elements_by_class_name("text-wrap") #查找元素
     for i in range(6):
-        print('浏览第'+str(i)+'条新闻')
+        print('浏览第'+str(i+1)+'条新闻')
         selnews = ele_news[i]
         selnews.click()
         time.sleep(2)
@@ -99,7 +99,7 @@ def browseCCTVNews():
     url = 'https://www.xuexi.cn/8e35a343fca20ee32c79d67e35dfca90/7f9f27c65e84e71e1b7189b7132b4710.html?p1='
     today = datetime.date.today()
     for i in range(6):
-        print('浏览第'+str(i)+'条新闻联播')
+        print('浏览第'+str(i+1)+'条新闻联播')
         today = beforeday(today)  #取前一天
         urlnews = url+str(today)
         driver.get(urlnews)  # 进入 前一天的新闻联播 页面
@@ -138,10 +138,18 @@ def updateCookie():
     driver.get("https://www.xuexi.cn/")
     time.sleep(5)
     loginele = driver.find_elements_by_class_name("logged-link")
+    Flag = True
     if len(loginele) == 0:
+        for i in range(10):
+            print("logged-link标签获取失败，重新获取......")
+            time.sleep(60)
+            loginele = driver.find_elements_by_class_name("logged-link")
+            if len(loginele) != 0:
+                Flag = True
+                break
         print("cookie已经过期")
         Flag = False
-    else:
+    elif Flag == True:
         print("使用cookie成功登录")
         # 更新 cookie文件
         cookie = driver.get_cookies()  # 获取cookie,列表形式
@@ -165,14 +173,17 @@ def PerformBrowse():
         i = datetime.datetime.now()
         if (i.hour >= 6 and i.hour < 7):
             Flag = updateCookie()  # 更新cookie
-            if flag == False:
+            if Flag == False:
                 break
             print('开始浏览:%s......' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
             browsenews()
             browseCCTVNews()
-        elif (i.hour >= 2 and i.hour < 3)  or  (i.hour >= 13 and i.hour < 14) \
-                or (i.hour >= 20 and i.hour < 21) or (i.hour>=0 and i.hour<1):
-            updateCookie()  # 更新cookie
+
+            break
+        else:
+            Flag = updateCookie()  # 更新cookie
+            if Flag == False:
+                break
         time.sleep(delay)
 
 
